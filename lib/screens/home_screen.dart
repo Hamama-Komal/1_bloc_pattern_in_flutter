@@ -1,5 +1,4 @@
-import 'package:bloc_cubit_example2/bloc/internet_bloc/internet_bloc.dart';
-import 'package:bloc_cubit_example2/bloc/internet_bloc/internet_state.dart';
+import 'package:bloc_cubit_example2/cubit/internet_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,26 +12,28 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
 
-          // Bloc Consumer: Bloc Builder + Bloc Listener
-          child: BlocConsumer<InternetBloc, InternetState>(
+          // 1) Bloc Consumer: Bloc Builder + Bloc Listener
+          // Now use Cubit instead of Bloc
+          // 2) Internet Bloc -> Internet Cubit
+          child: BlocConsumer<InternetCubit, InternetState>(
             builder: (context, state) {
-              if (state is InternetConnectedState) {
+              if (state == InternetState.Connected) { // enum class give us variable compare it by values
                 return Text('Connected');
-              } else if (state is InternetLossState) {
+              } else if (state == InternetState.Lost) {
                 return Text('No Internet');
               } else {
                 return Text('Loading...');
               }
             },
             listener: (context, state) {
-              if (state is InternetConnectedState) {
+              if (state == InternetState.Connected) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("Connected!"),
                     backgroundColor: Colors.green,
                   ),
                 );
-              } else if (state is InternetLossState) {
+              } else if (state == InternetState.Lost) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("No Internet"),
