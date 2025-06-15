@@ -32,12 +32,3 @@ class InternetBloc extends Bloc<InternetEvent, InternetState> {
     return super.close();
   }
 }
-
-
-/*if (result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi) {
-        add(InternetConnect());
-      } else {
-        add(InternetLost());
-      }
-    });*/
